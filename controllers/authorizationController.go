@@ -1,29 +1,25 @@
 package controllers
 
 import (
+	"fmt"
 	"net/http"
 
-	"github.com/sasd97/flatterer/constants"
-	"github.com/sasd97/flatterer/services"
+	"github.com/sasd97/flatterer-vk/constants"
+	"github.com/sasd97/flatterer-vk/services"
 )
 
 func HandleAuthorize(w http.ResponseWriter, r *http.Request) {
-	authUrl, err := services.Authorize()
+	authUrl := services.Authorize()
 
-	if err != nil {
-		panic(err)
-	}
-
+	fmt.Println(authUrl)
 	http.Redirect(w, r, authUrl, http.StatusFound)
 }
 
-func HandleCode(w http.ResponseWriter, r *http.Request) {
-	code := r.URL.Query().Get("code")
-	err := services.OAuth(code)
+func HandleSetup(w http.ResponseWriter, r *http.Request) {
+	token := r.URL.Query().Get("access_token")
+	expires := r.URL.Query().Get("expires_in")
+	user := r.URL.Query().Get("user_id")
 
-	if err != nil {
-		panic(err)
-	}
-
+	services.Setup(token, user, expires)
 	http.Redirect(w, r, constants.START, http.StatusFound)
 }

@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/sasd97/flatterer/server"
+	"github.com/sasd97/flatterer-vk/server"
 )
 
 func main() {

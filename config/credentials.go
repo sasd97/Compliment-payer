@@ -1,7 +1,6 @@
 package config
 
 const CLIENT_ID string = ""
-const API_KEY string = ""
-const REDIRECT_LINK string = "http://localhost:3000/vk/handle/token"
+const REDIRECT_SLINK string = "http://oauth.vk.com/blank.html"
 const CONSUMER_ID string = ""
-const SCOPE string = "wall"
+const SCOPE string = "messages"

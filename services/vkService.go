@@ -1,11 +1,18 @@
 package services
 
 import (
-	"github.com/sasd97/flatterer/config"
-	"github.com/yanple/vk_api"
+	"fmt"
+
+	"github.com/sasd97/flatterer-vk/config"
 )
 
-var api vk_api.Api
+type API struct {
+	AccessToken string
+	UserId      string
+	ExpiresIn   string
+}
+
+var api API
 
 func IsAuthorized() bool {
 	return api.AccessToken != ""
@@ -15,10 +22,18 @@ func AccessToken() string {
 	return api.AccessToken
 }
 
-func Authorize() (string, error) {
-	return api.GetAuthUrl(config.REDIRECT_LINK, config.CLIENT_ID, config.SCOPE)
+func Authorize() string {
+	return fmt.Sprintf("https://oauth.vk.com/authorize?client_id=%s&redirect_uri=%s&response_type=token&scope=messages",
+		config.CLIENT_ID,
+		config.REDIRECT_SLINK)
 }
 
-func OAuth(code string) error {
-	return api.OAuth(config.REDIRECT_LINK, config.API_KEY, config.CLIENT_ID, code)
+func Setup(accessToken, userId, expiresIn string) {
+	api.AccessToken = accessToken
+	api.UserId = userId
+	api.ExpiresIn = expiresIn
+}
+
+func Log() {
+	fmt.Printf("Access token: %s\nUser id: %s\nExpires in: %s\n", api.AccessToken, api.UserId, api.ExpiresIn)
 }
