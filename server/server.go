@@ -9,5 +9,8 @@ import (
 func Make() *martini.ClassicMartini {
 	server := martini.Classic()
 	server.Get(constants.HOME, controllers.HandleHome)
+	server.Get(constants.START, controllers.HandleStart)
+	server.Get(constants.AUTHORIZE, controllers.HandleAuthorize)
+	server.Get(constants.HANDLE_TOKEN, controllers.HandleCode)
 	return server
 }
